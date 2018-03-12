@@ -96,12 +96,10 @@ require_once(__DIR__ . '/../init.php');
 <body class="<?= (isIpAllowed() ? 'whitelisted' : 'not_whitelisted') ?>">
 <div id="mapid"></div>
 
-<div id="region_filters"></div>
-<div id="rank_filters"></div>
-<div id="stats">
-    <div><b id='uiks_count'>0</b> УИК</div>
-</div>
-<!-- script src='uiks.data.js' charset='utf-8'></script -->
-<script src='map.js?v=<?= rand(10000, 999999) ?>.<?= time() ?>' charset='utf-8'></script>
-</body>
+    <div id="region_filters"></div>
+    <div id="rank_filters"></div>
+    <!-- <div id="stats"><div><b id='uiks_count'>0</b> УИК</div></div> -->
+    <!-- script src='uiks.data.js' charset='utf-8'></script -->
+    <script src='map.js?v=<?=rand(10000, 999999) ?>.<?=time()?>' charset='utf-8'></script>
+  </body>
 </html>
