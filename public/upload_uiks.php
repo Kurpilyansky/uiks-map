@@ -23,7 +23,10 @@ if (isset($_FILES['uiks'])) {
 function processFile(&$error, &$msg) {
     require_once(__DIR__ . '/../init.php');
     $uiks = json_decode(file_get_contents($_FILES['uiks']['tmp_name']), true);
-    if ($uiks === null) {
+
+    if (!isAccessGranted()) {
+        $error = 'Что-то пошло не так';
+    } elseif ($uiks === null) {
         $error = 'Загруженный файл содержит недействительный JSON';
     } else {
         ?><div id="progress"><span id="progress_count">0</span> записей обработано</div><?php

@@ -53,7 +53,10 @@ function getRankColor(rank){
 
 
 document.addEventListener('DOMContentLoaded', function (){
-	let uik_token = prompt('Введите код доступа');
+	let uik_token = 'xxx';
+	if (! $('body').is('.whitelisted')) {
+        uik_token = prompt('Введите код доступа');
+    }
 
 	if (uik_token != ''){
 		$.ajax({
@@ -68,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function (){
 				init_map(response);
 				setInterval(getUpdatedCounts, 15000);
 			},
-			error(a, b, c){
+			error: function(a, b, c){
 				console.log(a, b, c);
 				alert(b);
 			}
@@ -88,12 +91,12 @@ document.addEventListener('DOMContentLoaded', function (){
 				updated: max_updated
 			},
 			success: function (response){
-				max_updated = Math.max(response.updated);
+				max_updated = Math.max(response.updated, max_updated);
 				for (let i=0; i<response.rows.length; i++) {
 					watcher_counts[response.rows[i].id] = response.rows[i].watchers_count;
 				}
 			},
-			error(a, b, c){
+			error: function(a, b, c){
 				console.log(a, b, c);
 				alert(b);
 			}

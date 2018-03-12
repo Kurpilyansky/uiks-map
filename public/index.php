@@ -2,6 +2,11 @@
 ini_set('error_reporting', E_ALL);
 require_once(__DIR__ . '/../init.php');
 
+if (!isAccessGranted()) {
+    echo '[]';
+    exit;
+}
+
 switch (getPost('action')) {
     case 'getUiks':
         echo json_encode(getUiks());
