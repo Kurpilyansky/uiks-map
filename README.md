@@ -11,3 +11,5 @@
 Server root dir: public
 
 create .env file and configure variables. Example is in env_example
+
+run `$ composer update`
