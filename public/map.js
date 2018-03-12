@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function (){
 
 		var rank_states = [];
 		var region_states = [];
-		var stats_container = document.getElementById('uiks_count');
+		//var stats_container = document.getElementById('uiks_count');
 
 		function updateLayersState(){
 			var shown_count = 0;
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function (){
 					}
 				}
 			}
-			stats_container.textContent = shown_count;
+			//stats_container.textContent = shown_count;
 		}
 
 		var rank_filters = document.getElementById('rank_filters');
