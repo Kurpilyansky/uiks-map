@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function (){
 				updated: max_updated
 			},
 			success: function (response){
-				max_updated = Math.max(response.updated);
+				max_updated = Math.max(response.updated, max_updated);
 				for (let i=0; i<response.rows.length; i++) {
 					watcher_counts[response.rows[i].id] = response.rows[i].watchers_count;
 				}
