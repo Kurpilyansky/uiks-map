@@ -177,11 +177,7 @@ document.addEventListener('DOMContentLoaded', function (){
 		}
 
 		// we collect all uiks with the same coordinates in the same popup
-		let popup_text = '';
-		let last_latitude = -1;
-		let last_longitude = -1;
-		let max_rank = 0;
-		let group_is_rendered = false;
+		let best_rank = 16;
 		for (var i = 0; i < uiks.length; ++i){
 			var uik = uiks[i];
 			if (uik.vote_coord_long == '-' || uik.rank == '-'){
@@ -192,42 +188,23 @@ document.addEventListener('DOMContentLoaded', function (){
 			if (!uik_groups[getGroupKey(uik.vote_coord_lat, uik.vote_coord_long)]) {
 				uik_groups[getGroupKey(uik.vote_coord_lat, uik.vote_coord_long)] = [];
 			}
-
-			max_updated = Math.max(uik.updated, max_updated);
-
-			max_rank = Math.min(max_rank, uik.rank);
-
-			if (last_latitude !== uik.vote_coord_lat || last_longitude !== uik.vote_coord_long && last_longitude>0){
-				var element = renderGroup(max_rank, getGroupKey(last_latitude, last_longitude));
-				var region = (uik.region_code == 78 ? 0 : 1);
-
-				while (elements[region].length <= max_rank){
-					elements[region].push(L.layerGroup());
-				}
-				elements[region][max_rank].addLayer(element);
-
-				max_rank = 15;
-				group_is_rendered = true;
-			} else {
-				group_is_rendered = false;
-			}
-
 			uik_groups[getGroupKey(uik.vote_coord_lat, uik.vote_coord_long)].push(uik);
 			watcher_counts[uik.id] = uik.watchers_count;
 
-			last_latitude = uik.vote_coord_lat;
-			last_longitude = uik.vote_coord_long;
+			max_updated = Math.max(uik.updated, max_updated);
+			best_rank = Math.min(best_rank, uik.rank);
 
-		}
+			if (i == uiks.length - 1 || uik.vote_coord_lat !== uiks[i + 1].vote_coord_lat || uik.vote_coord_long !== uiks[i + 1].vote_coord_long){
+				var element = renderGroup(best_rank, getGroupKey(uik.vote_coord_lat, uik.vote_coord_long));
+				var region = (uik.region_code == 78 ? 0 : 1);
 
-		// render last group if it was not rendered in the loop
-		if (!group_is_rendered){
-			var element = renderGroup(max_rank, getGroupKey(last_latitude, last_longitude));
+				while (elements[region].length <= best_rank){
+					elements[region].push(L.layerGroup());
+				}
+				elements[region][best_rank].addLayer(element);
 
-			while (elements[region].length <= max_rank){
-				elements[region].push(L.layerGroup());
+				best_rank = 16;
 			}
-			elements[region][max_rank].addLayer(element);
 		}
 
 
