@@ -8,10 +8,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
-if (getPost('token', '') !== getenv('TOKEN')) {
-    include(__DIR__ . '/public/itworks.php');
-    exit;
-}
+require_once(__DIR__ . '/utils.php');
 
 require_once(__DIR__ . '/init_db.php');
 
@@ -23,9 +20,12 @@ function getPost($post_key, $default = null) {
     return $_POST[$post_key] ?? $default;
 }
 
+function isAccessGranted() {
+    if (
+        !(isIpAllowed() || getPost('token', '') === getenv('TOKEN'))
+    ) {
+        return false;
+    }
 
-
-
-
-
-
+    return true;
+}
