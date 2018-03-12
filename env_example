@@ -5,3 +5,5 @@ DB_HOST="localhost"
 DB_DATABASE="DATABASE_NAME"
 DB_USERNAME="USERNAME"
 DB_PASSWORD="PASSWORD"
+
+IP_WHITE_LIST="comma separated list of ip addresses"
